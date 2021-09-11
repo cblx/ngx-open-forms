@@ -4,7 +4,7 @@ import { SchemaLike } from "./schema-like";
 
 export class OpenFormGroup<TSchema extends SchemaLike> extends FormGroup {
     get properties(): { [P in keyof TSchema['properties']]: OpenFormControl } {
-        return <any>super.controls;
+        return <any>this.controls;
     }
 
     patchValue(value: { [P in keyof TSchema['properties']]?: any }) {
