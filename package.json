@@ -1,5 +1,5 @@
 {
-  "name": "ngx-open-forms",
+  "name": "@cblx-br/ngx-open-forms",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
