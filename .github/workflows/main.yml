@@ -1,3 +1,4 @@
+name: Build and Deploy
 on:
   push:
     branches: 
@@ -19,7 +20,7 @@ jobs:
           script: |
             const branch = '${{github.ref}}';
             console.log(branch);
-            const id = branch.split('/').
+            const id = branch.split('/').reverse()[0];
             core.setOutput('id', id);
       - run: |
           npm version ${{steps.get-version.outputs.id}} --no-git-tag-version
