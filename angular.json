@@ -1,0 +1,42 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "2fe0297e-3bc1-491c-813e-842fa0bcb63f"
+  },
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "ngx-open-forms": {
+      "projectType": "library",
+      "root": "projects/ngx-open-forms",
+      "sourceRoot": "projects/ngx-open-forms/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-open-forms/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-open-forms/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-open-forms/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-open-forms/src/test.ts",
+            "tsConfig": "projects/ngx-open-forms/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-open-forms/karma.conf.js"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ngx-open-forms"
+}
