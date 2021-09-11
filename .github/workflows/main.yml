@@ -1,0 +1,30 @@
+on:
+  push:
+    branches: 
+      - releases/*
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - run: ng build ngx-open-forms
+      - id: get-version
+        uses: actions/github-script@0.9.0
+        with:
+          script: |
+            const branch = '${{github.ref}}';
+            console.log(branch);
+            const id = branch.split('/').
+            core.setOutput('id', id);
+      - run: |
+          npm version ${{steps.get-version.outputs.id}} --no-git-tag-version
+          npm publish          
+        working-directory: dist
+        env:
+           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+      
