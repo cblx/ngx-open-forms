@@ -1,6 +1,6 @@
 {
-  "name": "ngx-open-forms",
-  "version": "0.0.1",
+  "name": "@cblx-br/ngx-open-forms",
+  "version": "0.0.0",
   "peerDependencies": {
     "@angular/common": "^12.2.0",
     "@angular/core": "^12.2.0"
