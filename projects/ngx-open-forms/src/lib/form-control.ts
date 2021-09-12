@@ -7,6 +7,7 @@ export interface OpenFormControlSettings {
 }
 
 export class OpenFormControl extends FormControl {
+    get schema(){ return this.settings.schema; }
     constructor(private settings: OpenFormControlSettings) {
         super(settings.schema.default);
         this.initValidators();
@@ -21,9 +22,9 @@ export class OpenFormControl extends FormControl {
 
         if (schema.maxLength) { this.addValidators(Validators.maxLength(schema.maxLength)); }
 
-        if (schema.minimum) { this.addValidators(Validators.max(schema.minimum)); }
+        if (schema.minimum) { this.addValidators(Validators.min(schema.minimum)); }
 
-        if (schema.minLength) { this.addValidators(Validators.maxLength(schema.minLength)); }
+        if (schema.minLength) { this.addValidators(Validators.minLength(schema.minLength)); }
 
         if (schema.pattern) { this.addValidators(Validators.pattern(schema.pattern)); }
 
