@@ -8,6 +8,7 @@ export interface OpenFormControlSettings {
 
 export class OpenFormControl extends FormControl {
     get schema(){ return this.settings.schema; }
+    customData: any;
     constructor(private settings: OpenFormControlSettings) {
         super(settings.schema.default);
         this.initValidators();
