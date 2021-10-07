@@ -1,11 +1,11 @@
-// import { OpenFormControl } from "./form-control";
+import { ErrorMessages } from "./error-message-fn";
 
-// export const PT_ERROR_MESSAGES: { [key: string]: (ctrl: OpenFormControl) => string } = {
-//     email: _ => 'email inválido',
-//     max: ctrl => `deve ser menor que ${ctrl.schema.maximum}`,
-//     maxLength: ctrl => `máximo ${ctrl.schema.maxLength} caracteres`,
-//     min: ctrl => `deve ser maior que ${ctrl.schema.minimum}`,
-//     minLength: ctrl => `mínimo ${ctrl.schema.maxLength} caracteres`,
-//     pattern: _ => 'formato inválido',
-//     required: _ => 'obrigatório',
-// };
+export const PT_ERROR_MESSAGES: ErrorMessages = {
+    email: _ => 'email inválido',
+    max: data => `deve ser menor que ${data.max}`,
+    maxLength: data => `máximo ${data.requiredLength} caracteres`,
+    min: data => `deve ser maior que ${data.min}`,
+    minLength: data => `mínimo ${data.requiredLength} caracteres`,
+    pattern: _ => 'valor inválido',
+    required: _ => 'obrigatório',
+};

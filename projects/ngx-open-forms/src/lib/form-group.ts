@@ -1,9 +1,10 @@
 import { FormGroup } from "@angular/forms";
+import { OpenAbstractControl } from "./abstract-control";
 import { OpenFormControl } from "./form-control";
 import { SchemaLike } from "./schema-like";
 
-export class OpenFormGroup<TSchema extends SchemaLike> extends FormGroup {
-    get properties(): { [P in keyof TSchema['properties']]: OpenFormControl } {
+export class OpenFormGroup<TSchema extends SchemaLike> extends FormGroup implements OpenAbstractControl {
+    get properties(): { [P in keyof TSchema['properties']]: OpenAbstractControl } {
         return <any>this.controls;
     }
 
@@ -11,7 +12,7 @@ export class OpenFormGroup<TSchema extends SchemaLike> extends FormGroup {
         this.patchValue(value);
     }
 
-    constructor(schema: TSchema){
+    constructor(public schema: TSchema){
         super({});
         for (let propName in schema.properties) {
             const propSchema = schema.properties[propName];

@@ -1,3 +1,6 @@
 import { NgModule } from '@angular/core';
-@NgModule({})
-export class NgxOpenFormsModule { }
+import { ErrorMessagePipe } from './error-message.pipe';
+@NgModule({
+    declarations: [ErrorMessagePipe]
+})
+export class OpenFormsModule { }
