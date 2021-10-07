@@ -7,7 +7,7 @@ import { SchemaLike } from "./schema-like";
 
 @Injectable({providedIn: OpenFormsModule })
 export class OpenFormBuilder extends FormBuilder {
-    groupFromSchema<TSchema extends SchemaLike>(schema: TSchema){
+    groupSchema<TSchema extends SchemaLike>(schema: TSchema){
         return new OpenFormGroup(schema);
     }
 }
