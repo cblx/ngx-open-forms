@@ -9,12 +9,20 @@ import { ERROR_MESSAGES } from "./error-messages.token";
 export class ErrorMessagePipe implements PipeTransform{
     constructor(@Inject(ERROR_MESSAGES) private errorMessages: ErrorMessages){}
     
-    transform(errors?: ValidationErrors | null, ...args: any[]) {
+    transform(
+        errors?: ValidationErrors | null, 
+        overrideMessages?: ErrorMessages
+    ) {
         if(!errors){ return ''; }
         for(let errName in errors){
             let errVal = errors[errName];
+            if(overrideMessages && overrideMessages.hasOwnPropertyName(errName)){
+                return overrideMessages[errName](errVal); 
+            }
             if(typeof errVal === 'string'){ return errVal; }
-            if(errName in this.errorMessages){ return this.errorMessages[errName](errVal); }
+            if(errName in this.errorMessages){ 
+                return this.errorMessages[errName](errVal); 
+            }
             return errName;
         }
         return '';
