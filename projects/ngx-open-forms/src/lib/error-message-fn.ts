@@ -1,2 +1,2 @@
 export type ErrorMessageFn = (errorData?: any) => string;
-export type ErrorMessages = { [key: string]: ErrorMessageFn };
+export type ErrorMessages = { [key: string]: ErrorMessageFn | string };

@@ -16,16 +16,23 @@ export class ErrorMessagePipe implements PipeTransform{
         if(!errors){ return ''; }
         for(let errName in errors){
             let errVal = errors[errName];
-            if(overrideMessages && overrideMessages.hasOwnPropertyName(errName)){
-                return overrideMessages[errName](errVal); 
-            }
+            let errorMessage = this.extractMessage(errName, errVal, overrideMessages);
+            if(errorMessage){ return errorMessage; }
             if(typeof errVal === 'string'){ return errVal; }
-            if(errName in this.errorMessages){ 
-                return this.errorMessages[errName](errVal); 
-            }
+            errorMessage = this.extractMessage(errName, errVal, this.errorMessages);
+            if(errorMessage){ return errorMessage; }
             return errName;
         }
         return '';
+    }
+
+    private extractMessage(errorName: string, errorVal: any, errorMessages?: ErrorMessages){
+        if(errorMessages && (errorName in errorMessages)){
+            const message = errorMessages[errorName];
+            if(typeof message === 'string'){ return message; }
+            return message(errorVal);
+        }
+        return null;
     }
  
 }
