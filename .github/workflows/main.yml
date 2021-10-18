@@ -14,11 +14,15 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: npm ci
+      # build angular
       - run: npx ng build ngx-open-forms
+      # build locales
       - run: tsc projects/ngx-open-forms/src/locales/*.ts --declaration
+      # move locales to dist
       - run: mkdir dist/ngx-open-forms/locales
       - run: mv projects/ngx-open-forms/src/locales/*.d.ts dist/ngx-open-forms/locales
       - run: mv projects/ngx-open-forms/src/locales/*.js dist/ngx-open-forms/locales
+      # compute new version
       - id: get-version
         uses: actions/github-script@0.9.0
         with:
@@ -27,6 +31,7 @@ jobs:
             console.log(branch);
             const id = branch.split('/').reverse()[0];
             core.setOutput('id', id);
+      # set version and publish
       - run: |
           npm version ${{steps.get-version.outputs.id}} --no-git-tag-version
           npm publish --access public          
