@@ -24,4 +24,11 @@ export type SchemaLike = {
     'x-enum-varnames'?: string[];
 };
 
+export type SchemaLikeOrOnlyProperties = 
+    SchemaLike | 
+    {
+        properties?: { [propertyName: string]: SchemaLike;
+    }
+};
+
 export type SchemaRefs = { [key: string]: SchemaLike };
