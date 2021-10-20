@@ -27,7 +27,7 @@ export type SchemaLike = {
 export type SchemaLikeOrOnlyProperties = 
     SchemaLike | 
     {
-        properties?: { [propertyName: string]: SchemaLike;
+        properties?: { [propertyName: string]: any;
     }
 };
 
