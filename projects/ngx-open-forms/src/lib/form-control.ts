@@ -3,8 +3,9 @@ import { OpenAbstractControl } from "./abstract-control";
 import { SchemaLike, SchemaRefs } from "./schema-like";
 
 export interface OpenFormControlSettings {
-    required?: boolean;
+    name?: string;
     schema: SchemaLike;
+    required?: boolean;
     refs?: SchemaRefs;
 }
 
@@ -29,12 +30,11 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
      */
     readonly data: { [key: string]: any } = {};
     /**
-     * The component name in the OpenApi schema. 
-     * This value will only be defined when
-     * providing 'refs' option containing
-     * this control schema.
+     * For OpenFormControls generated from
+     * OpenFormGroups, this will be the correspondent
+     * property name in the OpenApi Schema
      */
-    readonly name: string | undefined;
+    get name(){ return this.settings.name; }
 
     /**
      * The component possible value options with
@@ -48,15 +48,6 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
 
     constructor(private settings: OpenFormControlSettings) {
         super(settings.schema.default);
-        const refs = settings.refs;
-        if(refs){
-            for(let prop in refs){
-                if(refs[prop] ==  settings.schema){
-                    this.name = prop;
-                    break;
-                }
-            }
-        }
         this.initValidators();
         this.setupBooleanOptions();
         this.setupEnumOptions();

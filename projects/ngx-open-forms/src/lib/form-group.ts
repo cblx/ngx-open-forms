@@ -19,6 +19,7 @@ export class OpenFormGroup<TSchema extends SchemaLikeOrOnlyProperties> extends F
             const propSchema = schema.properties[propName!];
             const required = ((<SchemaLike>schema).required?.indexOf(propName) ?? -1) >= 0;
             const control = new OpenFormControl({
+                name: propName,
                 required,
                 schema: propSchema,
                 refs: <SchemaRefs>refs
