@@ -9,7 +9,7 @@ export class OpenFormGroup<TSchema extends SchemaLikeOrOnlyProperties> extends F
     }
 
     patchValue(value: { [P in keyof TSchema['properties']]?: any }) {
-        this.patchValue(value);
+        super.patchValue(value);
     }
 
     constructor(public schema: TSchema, refs: SchemaRefs | object | undefined = undefined){
