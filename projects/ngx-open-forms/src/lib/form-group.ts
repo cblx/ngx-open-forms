@@ -46,7 +46,8 @@ export class OpenFormGroup<TSchema extends SchemaLikeOrOnlyProperties> extends F
                 name: propName,
                 required,
                 schema: propSchema,
-                refs: <SchemaRefs>refs
+                refs: <SchemaRefs>refs,
+                parent: this
             });
             this.addControl(propName, control);
         }

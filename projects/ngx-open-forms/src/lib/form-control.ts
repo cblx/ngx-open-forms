@@ -1,5 +1,6 @@
 import { FormControl, Validators } from "@angular/forms";
 import { OpenAbstractControl } from "./abstract-control";
+import { OpenFormGroup } from "./form-group";
 import { SchemaLike, SchemaRefs } from "./schema-like";
 
 export interface OpenFormControlSettings {
@@ -7,6 +8,7 @@ export interface OpenFormControlSettings {
     schema: SchemaLike;
     required?: boolean;
     refs?: SchemaRefs;
+    parent?: OpenFormGroup<any>;
 }
 
 export interface OpenFormControlOption {
