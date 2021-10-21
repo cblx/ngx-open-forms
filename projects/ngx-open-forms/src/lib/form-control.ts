@@ -25,7 +25,7 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
     /**
      * The schema that originated this FormControl
      */
-    get schema(){ return this.settings.schema; }
+    get schema() { return this.settings.schema; }
     /**
      * Custom data
      */
@@ -35,7 +35,7 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
      * OpenFormGroups, this will be the correspondent
      * property name in the OpenApi Schema
      */
-    get name(){ return this.settings.name; }
+    get name() { return this.settings.name; }
 
     /**
      * The component possible value options with
@@ -59,11 +59,21 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
 
         if (this.settings.required) { this.addValidators(Validators.required); }
 
-        if (schema.maximum || schema.maximum === 0) { this.addValidators(Validators.max(schema.maximum)); }
+        if (schema.maximum || schema.maximum === 0) {
+            this.addValidators(Validators.max(schema.maximum));
+            if (schema.exclusiveMaximum) {
+                this.addValidators(ctrl => ctrl.value == schema.maximum ? { exclusiveMax: schema.maximum } : null);
+            }
+        }
 
         if (schema.maxLength) { this.addValidators(Validators.maxLength(schema.maxLength)); }
 
-        if (schema.minimum || schema.minimum === 0) { this.addValidators(Validators.min(schema.minimum)); }
+        if (schema.minimum || schema.minimum === 0) {
+            this.addValidators(Validators.min(schema.minimum));
+            if (schema.exclusiveMinimum) {
+                this.addValidators(ctrl => ctrl.value == schema.minimum ? { exclusiveMin: schema.minimum } : null);
+            }
+        }
 
         if (schema.minLength) { this.addValidators(Validators.minLength(schema.minLength)); }
 
@@ -72,9 +82,9 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
         if (schema.format == 'email') { this.addValidators(Validators.email); }
     }
 
-    private setupBooleanOptions(){
-        if(!this.schema) { return; }
-        if(this.schema.type == 'boolean'){
+    private setupBooleanOptions() {
+        if (!this.schema) { return; }
+        if (this.schema.type == 'boolean') {
             let optionTrue: any = { text: 'true', value: true };
             let optionFalse: any = { text: 'false', value: false };
             this.options = [
@@ -85,7 +95,7 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
     }
 
     private setupEnumOptions() {
-        if(!this.schema) { return; }
+        if (!this.schema) { return; }
         let ref = this.schema.$ref || this.schema.allOf?.find(() => true)?.$ref;
         if (!ref) { return; }
         ref = ref.replace('#/components/schemas/', '');
@@ -93,8 +103,8 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
         if (refSchema?.enum) {
             this.options = refSchema.enum.map(
                 (en, i) => {
-                    const option: any = { 
-                        text: refSchema['x-enum-varnames']?.[i] ?? en, 
+                    const option: any = {
+                        text: refSchema['x-enum-varnames']?.[i] ?? en,
                         value: en,
                         ref
                     };
