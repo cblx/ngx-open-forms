@@ -1,6 +1,6 @@
 import { FormControl, Validators } from "@angular/forms";
-import { OpenFormGroup } from "dist/ngx-open-forms/public-api";
 import { OpenAbstractControl } from "./abstract-control";
+import { OpenFormGroup } from "./form-group";
 import { SchemaLike, SchemaRefs } from "./schema-like";
 
 export interface OpenFormControlSettings {
