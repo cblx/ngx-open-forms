@@ -11,7 +11,8 @@ export interface OpenFormControlSettings {
 
 export interface OpenFormControlOption {
     text: string,
-    value?: any
+    value?: any,
+    ref?: string
 }
 
 let uidGen = 0;
@@ -94,7 +95,8 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
                 (en, i) => {
                     const option: any = { 
                         text: refSchema['x-enum-varnames']?.[i] ?? en, 
-                        value: en 
+                        value: en,
+                        ref
                     };
                     return option;
                 }
