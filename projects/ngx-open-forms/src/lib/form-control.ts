@@ -1,6 +1,6 @@
 import { FormControl, Validators } from "@angular/forms";
+import { OpenFormGroup } from "dist/ngx-open-forms/public-api";
 import { OpenAbstractControl } from "./abstract-control";
-import { OpenFormGroup } from "./form-group";
 import { SchemaLike, SchemaRefs } from "./schema-like";
 
 export interface OpenFormControlSettings {
@@ -8,7 +8,6 @@ export interface OpenFormControlSettings {
     schema: SchemaLike;
     required?: boolean;
     refs?: SchemaRefs;
-    parent?: OpenFormGroup<any>;
 }
 
 export interface OpenFormControlOption {
@@ -48,6 +47,8 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
      * This property can be set.
      */
     options?: OpenFormControlOption[];
+
+    get parent(){ return super.parent as OpenFormGroup<any>; }
 
     constructor(private settings: OpenFormControlSettings) {
         super(settings.schema.default);
