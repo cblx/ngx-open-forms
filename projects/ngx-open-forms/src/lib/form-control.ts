@@ -48,6 +48,9 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
      */
     options?: OpenFormControlOption[];
 
+    get asControl(){ return this; }
+    get asGroup(){ return null; }
+
     get parent(){ return super.parent as OpenFormGroup<any>; }
 
     constructor(private settings: OpenFormControlSettings) {

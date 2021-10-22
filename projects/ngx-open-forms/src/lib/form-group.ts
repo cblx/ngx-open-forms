@@ -28,6 +28,9 @@ export class OpenFormGroup<TSchema extends SchemaLikeOrOnlyProperties> extends F
         super.patchValue(value);
     }
 
+    get asControl(){ return null; }
+    get asGroup(){ return this; }
+
     constructor(public schema: TSchema, refs: SchemaRefs | object | undefined = undefined){
         super({});
         if(!schema){ return; }
