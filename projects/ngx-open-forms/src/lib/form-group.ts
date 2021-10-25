@@ -1,6 +1,7 @@
 import { FormGroup } from "@angular/forms";
 import { OpenAbstractControl } from "./abstract-control";
 import { OpenFormControl } from "./form-control";
+import { OpenControlOption } from "./option";
 import { SchemaLike, SchemaLikeOrOnlyProperties, SchemaRefs } from "./schema-like";
 
 export class OpenFormGroup<TSchema extends SchemaLikeOrOnlyProperties> extends FormGroup implements OpenAbstractControl {
@@ -28,8 +29,9 @@ export class OpenFormGroup<TSchema extends SchemaLikeOrOnlyProperties> extends F
         super.patchValue(value);
     }
 
-    get asControl(){ return null; }
+    get asControl(){ return undefined; }
     get asGroup(){ return this; }
+    options: OpenControlOption[] = [];
 
     constructor(public schema: TSchema, refs: SchemaRefs | object | undefined = undefined){
         super({});

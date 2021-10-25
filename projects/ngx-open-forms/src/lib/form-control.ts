@@ -1,6 +1,7 @@
 import { FormControl, Validators } from "@angular/forms";
 import { OpenAbstractControl } from "./abstract-control";
 import { OpenFormGroup } from "./form-group";
+import { OpenControlOption } from "./option";
 import { SchemaLike, SchemaRefs } from "./schema-like";
 
 export interface OpenFormControlSettings {
@@ -8,12 +9,6 @@ export interface OpenFormControlSettings {
     schema: SchemaLike;
     required?: boolean;
     refs?: SchemaRefs;
-}
-
-export interface OpenFormControlOption {
-    text: string,
-    value?: any,
-    ref?: string
 }
 
 let uidGen = 0;
@@ -36,7 +31,7 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
      * OpenFormGroups, this will be the correspondent
      * property name in the OpenApi Schema
      */
-    get name() { return this.settings.name; }
+    get name() { return this.settings.name ?? ''; }
 
     /**
      * The component possible value options with
@@ -46,10 +41,10 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
      * the referenced enum or if this control is boolean.
      * This property can be set.
      */
-    options?: OpenFormControlOption[];
+    options: OpenControlOption[] = [];
 
     get asControl(){ return this; }
-    get asGroup(){ return null; }
+    get asGroup(){ return undefined; }
 
     get parent(){ return super.parent as OpenFormGroup<any>; }
 
