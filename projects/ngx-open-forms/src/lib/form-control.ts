@@ -63,7 +63,7 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
         if (schema.maximum || schema.maximum === 0) {
             this.addValidators(Validators.max(schema.maximum));
             if (schema.exclusiveMaximum) {
-                this.addValidators(ctrl => ctrl.value == schema.maximum ? { exclusiveMax: schema.maximum } : null);
+                this.addValidators(ctrl => ctrl.value == schema.maximum ? { exclusiveMax: { max: schema.maximum } }: null);
             }
         }
 
@@ -72,7 +72,7 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
         if (schema.minimum || schema.minimum === 0) {
             this.addValidators(Validators.min(schema.minimum));
             if (schema.exclusiveMinimum) {
-                this.addValidators(ctrl => ctrl.value == schema.minimum ? { exclusiveMin: schema.minimum } : null);
+                this.addValidators(ctrl => ctrl.value == schema.minimum ? { exclusiveMin: { min: schema.minimum } } : null);
             }
         }
 
