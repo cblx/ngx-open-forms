@@ -1,7 +1,7 @@
 import { FormControl, Validators } from "@angular/forms";
 import { OpenAbstractControl } from "./abstract-control";
 import { OpenFormGroup } from "./form-group";
-import { OpenControlOption } from "./option";
+import { OpenControlOption, OpenControlOptionData } from "./option";
 import { SchemaLike, SchemaRefs } from "./schema-like";
 
 export interface OpenFormControlSettings {
@@ -43,10 +43,10 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
      */
     options: OpenControlOption[] = [];
 
-    get asControl(){ return this; }
-    get asGroup(){ return undefined; }
+    get asControl() { return this; }
+    get asGroup() { return undefined; }
 
-    get parent(){ return super.parent as OpenFormGroup<any>; }
+    get parent() { return super.parent as OpenFormGroup<any>; }
 
     constructor(private settings: OpenFormControlSettings) {
         super(settings.schema.default);
@@ -63,7 +63,7 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
         if (schema.maximum || schema.maximum === 0) {
             this.addValidators(Validators.max(schema.maximum));
             if (schema.exclusiveMaximum) {
-                this.addValidators(ctrl => ctrl.value == schema.maximum ? { exclusiveMax: { max: schema.maximum } }: null);
+                this.addValidators(ctrl => ctrl.value == schema.maximum ? { exclusiveMax: { max: schema.maximum } } : null);
             }
         }
 
@@ -95,19 +95,28 @@ export class OpenFormControl extends FormControl implements OpenAbstractControl 
         }
     }
 
+    public static resolveEnumOptionText = (enumName: string, enumSchema: SchemaLike, enumValueIndex: number) => {
+        return enumSchema['x-enum-varnames']?.[enumValueIndex] ?? enumSchema?.enum?.[enumValueIndex];
+    }
+
     private setupEnumOptions() {
         if (!this.schema) { return; }
-        let ref = this.schema.$ref || this.schema.allOf?.find(() => true)?.$ref;
-        if (!ref) { return; }
-        ref = ref.replace('#/components/schemas/', '');
-        const refSchema = this.settings.refs?.[ref];
+        let refName = this.schema.$ref || this.schema.allOf?.find(() => true)?.$ref;
+        if (!refName) { return; }
+        refName = refName.replace('#/components/schemas/', '');
+        const refSchema = this.settings.refs?.[refName];
         if (refSchema?.enum) {
             this.options = refSchema.enum.map(
-                (en, i) => {
-                    const option: any = {
-                        text: refSchema['x-enum-varnames']?.[i] ?? en,
+                (en, index) => {
+                    const data: OpenControlOptionData = {
+                        refName,
+                        refSchema,
+                        index
+                    };
+                    const option: OpenControlOption = {
+                        text: OpenFormControl.resolveEnumOptionText(refName!, refSchema, index),
                         value: en,
-                        ref
+                        data
                     };
                     return option;
                 }
