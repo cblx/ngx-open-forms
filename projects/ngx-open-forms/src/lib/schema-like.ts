@@ -22,6 +22,7 @@ export type SchemaLike = {
     allOf?: SchemaLike[];
     $ref?: string;
     'x-enum-varnames'?: string[];
+    [key: string]: any;
 };
 
 export type SchemaLikeOrOnlyProperties = 
