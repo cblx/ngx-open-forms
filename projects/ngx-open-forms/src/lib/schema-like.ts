@@ -17,6 +17,7 @@ export type SchemaLike = {
     pattern?: string;
     maxItems?: number;
     minItems?: number;
+    nullable?: boolean;
     required?: string[];
     enum?: any[];
     allOf?: SchemaLike[];
